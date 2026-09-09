@@ -165,8 +165,25 @@ def grow_tree(X, y, max_depth=2, min_samples_leaf=1, depth=0):
         "right": right_subtree
     }
 
-# Step 4 - predict_tree (not yet solved)
-# TODO: implement
+# Step 4 - predict_tree
+def predict_tree(tree, X):
+    predictions = []
+
+    for row in X:
+        node = tree
+
+        while not node["leaf"]:
+            feature = node["feature"]
+            threshold = node["threshold"]
+
+            if row[feature] <= threshold:
+                node = node["left"]
+            else:
+                node = node["right"]
+
+        predictions.append(node["value"])
+
+    return np.asarray(predictions, dtype=int)
 
 # Step 5 - fit_sklearn_tree (not yet solved)
 # TODO: implement
