@@ -288,8 +288,56 @@ def moons_data(n_samples=300, noise=0.25, random_state=42, test_size=0.3):
 
     return X_train, X_test, y_train, y_test
 
-# Step 9 - overfit_vs_regularized (not yet solved)
-# TODO: implement
+# Step 9 - overfit_vs_regularized
+from sklearn.metrics import accuracy_score
+
+def overfit_vs_regularized(
+    X_train,
+    X_test,
+    y_train,
+    y_test,
+    min_samples_leaf=5
+):
+    # Unrestricted tree.
+    free_tree = fit_sklearn_tree(
+        X_train,
+        y_train,
+        max_depth=None,
+        min_samples_leaf=1
+    )
+
+    # Regularized tree.
+    regularized_tree = fit_sklearn_tree(
+        X_train,
+        y_train,
+        max_depth=None,
+        min_samples_leaf=min_samples_leaf
+    )
+
+    # Predictions for the unrestricted tree.
+    free_train_pred = free_tree.predict(X_train)
+    free_test_pred = free_tree.predict(X_test)
+
+    # Predictions for the regularized tree.
+    regularized_train_pred = regularized_tree.predict(X_train)
+    regularized_test_pred = regularized_tree.predict(X_test)
+
+    return {
+        "free": {
+            "train_acc": float(accuracy_score(y_train, free_train_pred)),
+            "test_acc": float(accuracy_score(y_test, free_test_pred)),
+            "leaves": int(free_tree.get_n_leaves())
+        },
+        "regularized": {
+            "train_acc": float(
+                accuracy_score(y_train, regularized_train_pred)
+            ),
+            "test_acc": float(
+                accuracy_score(y_test, regularized_test_pred)
+            ),
+            "leaves": int(regularized_tree.get_n_leaves())
+        }
+    }
 
 # Step 10 - rotation_sensitivity (not yet solved)
 # TODO: implement
