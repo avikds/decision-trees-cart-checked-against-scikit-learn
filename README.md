@@ -21,7 +21,7 @@ python scaffold.py
 - [x] **9.** overfit_vs_regularized
 - [x] **10.** rotation_sensitivity
 - [x] **11.** regression_tree
-- [ ] **12.** tree_rules
+- [x] **12.** tree_rules
 - [ ] **13.** save_and_reload_tree
 - [ ] **14.** predict_species
 

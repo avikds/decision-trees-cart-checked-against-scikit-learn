@@ -415,8 +415,14 @@ def regression_tree(X, y, max_depth=2, random_state=42):
         "train_mse": train_mse
     }
 
-# Step 12 - tree_rules (not yet solved)
-# TODO: implement
+# Step 12 - tree_rules
+from sklearn.tree import export_text
+
+def tree_rules(clf, feature_names):
+    return export_text(
+        clf,
+        feature_names=list(feature_names)
+    )
 
 # Step 13 - save_and_reload_tree (not yet solved)
 # TODO: implement
