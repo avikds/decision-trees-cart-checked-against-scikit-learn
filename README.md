@@ -14,7 +14,7 @@ python scaffold.py
 - [x] **2.** best_split
 - [x] **3.** grow_tree
 - [x] **4.** predict_tree
-- [ ] **5.** fit_sklearn_tree
+- [x] **5.** fit_sklearn_tree
 - [ ] **6.** sklearn_splits
 - [ ] **7.** compare_trees
 - [ ] **8.** moons_data
