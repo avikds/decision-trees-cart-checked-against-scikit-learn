@@ -23,7 +23,7 @@ python scaffold.py
 - [x] **11.** regression_tree
 - [x] **12.** tree_rules
 - [x] **13.** save_and_reload_tree
-- [ ] **14.** predict_species
+- [x] **14.** predict_species
 
 ---
 
