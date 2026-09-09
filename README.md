@@ -19,7 +19,7 @@ python scaffold.py
 - [x] **7.** compare_trees
 - [x] **8.** moons_data
 - [x] **9.** overfit_vs_regularized
-- [ ] **10.** rotation_sensitivity
+- [x] **10.** rotation_sensitivity
 - [ ] **11.** regression_tree
 - [ ] **12.** tree_rules
 - [ ] **13.** save_and_reload_tree
