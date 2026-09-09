@@ -68,8 +68,102 @@ def best_split(X, y):
 
     return (best_feature, best_threshold, best_gain)
 
-# Step 3 - grow_tree (not yet solved)
-# TODO: implement
+# Step 3 - grow_tree
+def grow_tree(X, y, max_depth=2, min_samples_leaf=1, depth=0):
+    n = len(y)
+
+    # Leaf helper: majority class, with ties going to the smallest class.
+    def make_leaf():
+        classes, counts = np.unique(y, return_counts=True)
+        majority_class = classes[np.argmax(counts)]
+        return {
+            "leaf": True,
+            "value": int(majority_class),
+            "n": n
+        }
+
+    # Stop if the node is empty, pure, or the maximum depth is reached.
+    if n == 0:
+        return {
+            "leaf": True,
+            "value": 0,
+            "n": 0
+        }
+
+    if len(np.unique(y)) == 1 or depth >= max_depth:
+        return make_leaf()
+
+    parent_gini = gini(y)
+    best_feature = None
+    best_threshold = None
+    best_gain = 0.0
+
+    # Search all valid CART splits while enforcing min_samples_leaf.
+    for j in range(X.shape[1]):
+        values = np.sort(np.unique(X[:, j]))
+
+        if len(values) < 2:
+            continue
+
+        for i in range(len(values) - 1):
+            threshold = (values[i] + values[i + 1]) / 2.0
+
+            left_mask = X[:, j] <= threshold
+            right_mask = ~left_mask
+
+            n_left = int(np.sum(left_mask))
+            n_right = int(np.sum(right_mask))
+
+            if n_left < min_samples_leaf or n_right < min_samples_leaf:
+                continue
+
+            y_left = y[left_mask]
+            y_right = y[right_mask]
+
+            weighted_gini = (
+                n_left * gini(y_left) + n_right * gini(y_right)
+            ) / n
+
+            gain = parent_gini - weighted_gini
+
+            # Strict comparison keeps the first best split on ties.
+            if gain > best_gain:
+                best_gain = float(gain)
+                best_feature = j
+                best_threshold = float(threshold)
+
+    # No valid split that improves impurity.
+    if best_feature is None or best_gain <= 0.0:
+        return make_leaf()
+
+    # Partition the data using the selected split.
+    left_mask = X[:, best_feature] <= best_threshold
+    right_mask = ~left_mask
+
+    left_subtree = grow_tree(
+        X[left_mask],
+        y[left_mask],
+        max_depth=max_depth,
+        min_samples_leaf=min_samples_leaf,
+        depth=depth + 1
+    )
+
+    right_subtree = grow_tree(
+        X[right_mask],
+        y[right_mask],
+        max_depth=max_depth,
+        min_samples_leaf=min_samples_leaf,
+        depth=depth + 1
+    )
+
+    return {
+        "leaf": False,
+        "feature": best_feature,
+        "threshold": best_threshold,
+        "n": n,
+        "left": left_subtree,
+        "right": right_subtree
+    }
 
 # Step 4 - predict_tree (not yet solved)
 # TODO: implement

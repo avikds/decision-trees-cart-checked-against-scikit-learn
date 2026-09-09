@@ -12,7 +12,7 @@ python scaffold.py
 
 - [x] **1.** gini
 - [x] **2.** best_split
-- [ ] **3.** grow_tree
+- [x] **3.** grow_tree
 - [ ] **4.** predict_tree
 - [ ] **5.** fit_sklearn_tree
 - [ ] **6.** sklearn_splits
