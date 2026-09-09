@@ -16,7 +16,7 @@ python scaffold.py
 - [x] **4.** predict_tree
 - [x] **5.** fit_sklearn_tree
 - [x] **6.** sklearn_splits
-- [ ] **7.** compare_trees
+- [x] **7.** compare_trees
 - [ ] **8.** moons_data
 - [ ] **9.** overfit_vs_regularized
 - [ ] **10.** rotation_sensitivity

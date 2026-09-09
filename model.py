@@ -217,8 +217,56 @@ def sklearn_splits(clf):
 
     return splits
 
-# Step 7 - compare_trees (not yet solved)
-# TODO: implement
+# Step 7 - compare_trees
+def compare_trees(X, y, max_depth=2):
+    # Fit the hand-built CART tree.
+    my_tree = grow_tree(
+        X,
+        y,
+        max_depth=max_depth,
+        min_samples_leaf=1
+    )
+
+    # Fit the scikit-learn CART tree using the default seed.
+    clf = fit_sklearn_tree(
+        X,
+        y,
+        max_depth=max_depth
+    )
+
+    # Extract splits from the hand-built tree in depth-first, left-first order.
+    my_splits = []
+
+    def collect_splits(node):
+        if node["leaf"]:
+            return
+
+        my_splits.append(
+            (
+                int(node["feature"]),
+                round(float(node["threshold"]), 3)
+            )
+        )
+
+        collect_splits(node["left"])
+        collect_splits(node["right"])
+
+    collect_splits(my_tree)
+
+    # Get the scikit-learn splits.
+    sk_splits = sklearn_splits(clf)
+
+    # Compare predictions on the original data.
+    my_predictions = predict_tree(my_tree, X)
+    sklearn_predictions = clf.predict(X)
+
+    agreement = float(np.mean(my_predictions == sklearn_predictions))
+
+    return {
+        "same_splits": my_splits == sk_splits,
+        "agreement": agreement,
+        "my_splits": my_splits
+    }
 
 # Step 8 - moons_data (not yet solved)
 # TODO: implement
