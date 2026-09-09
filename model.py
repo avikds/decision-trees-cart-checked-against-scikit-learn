@@ -200,8 +200,22 @@ def fit_sklearn_tree(X, y, max_depth=2, min_samples_leaf=1, random_state=42):
 
     return clf
 
-# Step 6 - sklearn_splits (not yet solved)
-# TODO: implement
+# Step 6 - sklearn_splits
+def sklearn_splits(clf):
+    tree = clf.tree_
+    splits = []
+
+    for node in range(tree.node_count):
+        # A node is a leaf when children_left is -1.
+        if tree.children_left[node] != -1:
+            splits.append(
+                (
+                    int(tree.feature[node]),
+                    round(float(tree.threshold[node]), 3)
+                )
+            )
+
+    return splits
 
 # Step 7 - compare_trees (not yet solved)
 # TODO: implement
