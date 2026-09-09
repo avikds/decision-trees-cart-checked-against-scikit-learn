@@ -424,8 +424,12 @@ def tree_rules(clf, feature_names):
         feature_names=list(feature_names)
     )
 
-# Step 13 - save_and_reload_tree (not yet solved)
-# TODO: implement
+# Step 13 - save_and_reload_tree
+import joblib
+
+def save_and_reload_tree(clf, path):
+    joblib.dump(clf, path)
+    return joblib.load(path)
 
 # Step 14 - predict_species (not yet solved)
 # TODO: implement
